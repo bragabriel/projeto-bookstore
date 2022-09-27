@@ -2,15 +2,33 @@ package com.projeto.bookstore.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+/* @Entity: Essa notação informa para o Hibernet JPA que a nossa classe Categoria é
+ *  uma entidade e que pode criar uma tabela para ela no banco de dados.
+ *  Se não passar um nome, vai criar a tabela com o nome da classe
+*/
+@Entity
 public class Livro {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Id //Informa que nosso ID é uma chave primária
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //informar que a geração do valor do identificador único da entidade será gerenciada pelo provedor de persistência
 	private Integer id;
 	private String titulo;
 	private String nome_autor;
 	private String texto;
 
-	// Livro tem obrigatóriamente uma categoria
+	@ManyToOne
+	@JoinColumn(name = "categoria_id") //usada para definir propriedades na coluna usada para chave estrangeira de um relacionamento
 	private Categoria categoria;
+	// Livro tem obrigatóriamente uma categoria
 
 	public Livro() {
 		super();
